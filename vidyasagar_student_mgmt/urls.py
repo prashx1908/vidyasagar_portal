@@ -31,7 +31,7 @@ urlpatterns = [
     path("Hod/Staff/View", admin_views.VIEW_STAFF, name= 'view_staff'),
     path("Hod/Staff/Edit/<str:id>", admin_views.EDIT_STAFF, name= 'edit_staff'),
     path("Hod/Staff/Delete/<str:admin>", admin_views.DELETE_STAFF, name= 'delete_staff'),
-    path("Hod/Staff/Update>", admin_views.UPDATE_STAFF, name= 'update_staff'),
+    path("Hod/Staff/Update/", admin_views.UPDATE_STAFF, name= 'update_staff'),
     path('Hod/timetable/<int:student_id>/', admin_views.admin_view_timetable, name='admin_view_timetable'),
     path('Hod/timetable/<int:student_id>/edit/', admin_views.admin_edit_timetable, name='admin_edit_timetable'),
 
