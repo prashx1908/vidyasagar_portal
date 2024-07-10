@@ -1,0 +1,5 @@
+Django
+gunicorn
+django-environ
+psycopg2-binary
+django-active-link
