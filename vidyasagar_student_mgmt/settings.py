@@ -15,7 +15,8 @@ SECRET_KEY = "django-insecure-mx3@-!(-+=49-1kywr)xpnj(cw21i%bcz*69090vd8q%&^f_%v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['vercel.app']
+ALLOWED_HOSTS = ['vidyasagar-portal-r7mw.vercel.app', '.vercel.app']
+
 
 
 # Application definition
