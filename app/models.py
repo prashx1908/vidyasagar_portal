@@ -8,7 +8,7 @@ class customuser(AbstractUser):
         ('2', 'STAFF'),
         ('3', 'STUDENT'),
     )
-    user_type = models.CharField(choices=USER_TYPES, max_length=50)
+    user_type = models.CharField(choices=USER_TYPES, max_length=50, default='3')
     profile_pic = models.ImageField(upload_to='media/profile_pic', blank=True, null=True)
     student_details_link = models.URLField(max_length=200, null=True, blank=True)
     department = models.CharField(max_length=100, blank=True, null=True)

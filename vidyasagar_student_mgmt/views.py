@@ -5,39 +5,57 @@ from django.contrib import messages
 from app.models import customuser, Course
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import get_user_model
+
+def create_super_user(username, email, password):
+    User = get_user_model()
+    if not User.objects.filter(username=username).exists():
+        user = User.objects.create_superuser(username, email, password)
+        user.user_type = '1'  # Set user_type as admin
+        user.save()
+    else:
+        user = User.objects.get(username=username)
+        if not user.is_superuser:
+            user.is_superuser = True
+            user.user_type = '1'  # Set user_type as admin
+            user.save()
+        else:
+            print(f"Superuser '{username}' already exists.")
 
 def BASE(request):
     return render(request,'base.html')
 
-def LOGIN(request):
-    return render(request,'login.html')
-
 
 def doLogin(request):
     if request.method == "POST":
-        user= EmailBackEnd.authenticate(request,
-                                        username=request.POST.get('email'),
-                                        password= request.POST.get('password'),
-                                        )
-        if user!= None:
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        # Authenticate user
+        user = authenticate(request, username=email, password=password)
+
+        if user is not None:
+            # Log in the user
             login(request, user)
-            user_type = user.user_type
-            if user_type =='1':
+
+            # Check user_type and redirect accordingly
+            if user.user_type == '1':  # Admin
                 return redirect('hod_home')
-            elif user_type =='2':
+            elif user.user_type == '2':  # Staff
                 return redirect('staff_home')
-            elif user_type =='3':
+            elif user.user_type == '3':  # Student
                 return redirect('student_home')
             else:
-                messages.error(request, "Invalid Login! Check Your Credentials")
+                # Handle unexpected user_type (though it should be one of '1', '2', '3')
+                messages.error(request, "Invalid user type")
                 return redirect('login')
         else:
-            messages.error(request, "Invalid Login! Check Your Credentials")
+            # Handle invalid login credentials
+            messages.error(request, "Invalid credentials")
             return redirect('login')
 
-
-    return None
-
+    # If not a POST request, redirect to login page
+    return redirect('login')
 
 def doLogout(request):
     logout(request)
@@ -86,19 +104,6 @@ def PROFILE_UPDATE(request):
 
 
 
-def admin_manage_timetable(request, student_id):
-    student = get_object_or_404(User, id=student_id)
-    if request.method == 'POST':
-        form = TimetableForm(request.POST)
-        if form.is_valid():
-            timetable = form.save(commit=False)
-            timetable.user = student
-            timetable.save()
-            return redirect('admin_view_student', student_id=student.id)
-    else:
-        form = TimetableForm()
-    context = {
-        'form': form,
-        'student': student,
-    }
-    return render(request, 'admin_manage_timetable.html', context)
+
+def LOGIN(request):
+    return render(request, 'login.html')

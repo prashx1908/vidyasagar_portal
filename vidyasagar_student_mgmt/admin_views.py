@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from app.models import Course, Student, customuser, Staff
 from django.shortcuts import get_object_or_404
+from app.emailbackend import EmailBackEnd
 
 @login_required(login_url='/')
 def HOME(request):
