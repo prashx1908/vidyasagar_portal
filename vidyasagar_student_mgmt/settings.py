@@ -67,10 +67,15 @@ WSGI_APPLICATION = "vidyasagar_student_mgmt.wsgi.application"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'vidyasagar',  # Replace with your database name
+        'USER': 'vidyasagar',  # Replace with your database user
+        'PASSWORD': 'vidyasgar',  # Replace with your database password
+        'HOST': 'localhost',  # Or your database host
+        'PORT': '',  # Or your database port
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -119,3 +124,7 @@ STATICFILES_DIRS=[
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = 'app.customuser'
+
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+DEBUG = os.getenv('DJANGO_DEBUG', 'False').lower() == 'true'
+
