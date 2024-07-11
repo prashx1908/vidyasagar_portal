@@ -126,6 +126,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = 'app.customuser'
 
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
-DEBUG = os.getenv('DJANGO_DEBUG', 'False').lower() == 'true'
 
